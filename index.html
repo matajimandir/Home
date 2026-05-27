@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#0A0A0A"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="JSS MP"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<title>जन संघर्ष समिति मध्यप्रदेश</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Baloo+2:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#0A0A0A;
+  --black2:#1A1A1A;
+  --black3:#f5f5f5;
+  --black4:#eeeeee;
+  --fire:#E8420A;
+  --fire2:#C0392B;
+  --gold:#F5A623;
+  --gold2:#e07b00;
+  --purple:#7B2D8B;
+  --red:#C0392B;
+  --cream:#ffffff;
+  --white:#FFFFFF;
+  --gray:#888;
+  --text:#1a0505;
+  --border:rgba(192,57,43,0.15);
+  --glow:rgba(232,66,10,0.25);
+  --bg:#f8f4f4;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{
+  display:flex;flex-direction:column;
+  background:var(--bg);
+  font-family:'Baloo 2',sans-serif;
+  color:var(--text);
+}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#f0e8e8;}
+::-webkit-scrollbar-thumb{background:var(--fire);border-radius:4px;}
+
+/* ══ HEADER ══ */
+.topbar{
+  flex-shrink:0;
+  background:linear-gradient(135deg,#1a0000 0%,#3d0a0a 40%,#6b1a2a 100%);
+  border-bottom:3px solid var(--gold);
+  position:relative;z-index:100;
+}
+.topbar-main{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 14px;max-width:900px;margin:0 auto;
+}
+.logo-ring{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red),var(--purple));
+  padding:3px;flex-shrink:0;
+  box-shadow:0 0 18px var(--glow),0 0 35px rgba(123,45,139,0.2);
+  animation:logoPulse 3s ease-in-out infinite;
+}
+.logo-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;}
+@keyframes logoPulse{
+  0%,100%{box-shadow:0 0 18px var(--glow),0 0 35px rgba(123,45,139,0.2);}
+  50%{box-shadow:0 0 28px var(--glow),0 0 55px rgba(123,45,139,0.3);}
+}
+.topbar-title h1{
+  font-size:22px;font-weight:900;line-height:1.1;
+  background:linear-gradient(90deg,var(--gold),#ffb347,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.topbar-title p{font-size:13px;font-weight:600;color:rgba(255,210,150,0.85);margin-top:1px;}
+.install-btn{
+  margin-left:auto;
+  background:linear-gradient(135deg,var(--fire),var(--gold));
+  color:white;border:none;border-radius:20px;padding:7px 14px;
+  font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+  display:none;align-items:center;gap:4px;flex-shrink:0;
+}
+
+/* ══ TICKER ══ */
+.ticker-wrap{
+  background:linear-gradient(90deg,#2d0505,#1a0000,#2d0505);
+  border-top:1px solid rgba(245,166,35,0.3);
+  overflow:hidden;padding:7px 0;
+  display:flex;align-items:center;flex-shrink:0;
+}
+.ticker-label{
+  background:linear-gradient(135deg,var(--fire),var(--gold));
+  color:white;font-weight:900;
+  font-size:14px;padding:4px 14px;
+  border-radius:0 8px 8px 0;
+  flex-shrink:0;margin-right:12px;white-space:nowrap;
+}
+.ticker-track{overflow:hidden;flex:1;}
+.ticker-content{
+  display:inline-block;white-space:nowrap;
+  animation:ticker 40s linear infinite;
+  color:var(--gold);font-size:16px;font-weight:700;
+}
+@keyframes ticker{0%{transform:translateX(100vw);}100%{transform:translateX(-100%);}}
+
+/* ══ CONTENT ══ */
+.content-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg);}
+.page{display:none;}
+.page.active{display:block;animation:fadeUp 0.3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══ BOTTOM NAV ══ */
+.bottom-nav{
+  flex-shrink:0;background:white;
+  display:flex;border-top:2px solid #f0e0e0;
+  box-shadow:0 -3px 12px rgba(0,0,0,0.07);
+}
+.bnav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:8px 4px 10px;cursor:pointer;color:var(--gray);
+  font-size:13px;font-weight:700;border:none;background:none;
+  font-family:inherit;gap:2px;transition:all 0.2s;
+}
+.bnav-item .icon{font-size:26px;}
+.bnav-item.active{color:var(--fire);}
+.bnav-item.active .icon{filter:drop-shadow(0 0 4px rgba(232,66,10,0.4));}
+
+/* ══════════════════════════
+   HOME PAGE
+══════════════════════════ */
+
+/* Stats */
+.home-pad{padding:0 14px;max-width:700px;margin:0 auto;}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+  margin:14px 14px 0;max-width:700px;
+}
+.stat-card{
+  background:white;border:1px solid #f0d8d8;
+  border-radius:14px;padding:12px 6px;text-align:center;
+  position:relative;overflow:hidden;
+  box-shadow:0 3px 10px rgba(192,57,43,0.07);
+}
+.stat-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--fire),var(--gold),var(--purple));
+}
+.stat-emo{font-size:20px;margin-bottom:3px;}
+.stat-num{font-size:16px;font-weight:900;line-height:1;
+  background:linear-gradient(90deg,var(--fire),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-size:9.5px;color:var(--gray);margin-top:3px;font-weight:600;}
+
+/* Highlights runner */
+.hl-runner{
+  margin:14px 0 0;
+  background:linear-gradient(90deg,var(--black3),var(--black4));
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:9px 0;overflow:hidden;display:flex;align-items:center;
+}
+.hl-badge{
+  background:linear-gradient(135deg,var(--purple),var(--red));
+  color:white;font-weight:900;font-size:11px;
+  padding:3px 10px;border-radius:0 8px 8px 0;flex-shrink:0;margin-right:10px;
+  white-space:nowrap;
+}
+.hl-track{overflow:hidden;flex:1;}
+.hl-items{
+  display:inline-flex;gap:16px;white-space:nowrap;
+  animation:ticker 26s linear infinite;
+}
+.hl-chip{
+  background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);
+  border-radius:20px;padding:4px 12px;
+  color:var(--gold);font-size:12px;font-weight:700;
+  display:inline-flex;align-items:center;gap:5px;white-space:nowrap;
+}
+
+/* Objectives Slider */
+.obj-slider-section{margin:16px 14px 0;max-width:700px;}
+.sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.sec-hd-bar{
+  width:4px;height:24px;border-radius:4px;flex-shrink:0;
+  background:linear-gradient(180deg,var(--fire),var(--gold));
+}
+.sec-hd h2{font-size:18px;font-weight:900;color:var(--text);}
+.sec-hd span{font-size:12px;color:var(--gray);font-weight:600;}
+
+.obj-slider{overflow:hidden;position:relative;}
+.obj-slides{
+  display:flex;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.obj-slide{
+  min-width:100%;padding:20px;
+  background:white;
+  border:1px solid #f0d8d8;
+  border-radius:18px;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 14px rgba(192,57,43,0.08);
+}
+.obj-slide::before{
+  content:'';position:absolute;top:-30px;right:-30px;
+  width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,166,35,0.08),transparent 70%);
+}
+.obj-num-big{
+  font-size:52px;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,rgba(245,166,35,0.12),rgba(232,66,10,0.06));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:absolute;top:12px;right:16px;font-family:'Baloo 2',sans-serif;
+}
+.obj-icon{font-size:36px;margin-bottom:10px;}
+.obj-slide-title{
+  font-size:13px;font-weight:800;
+  background:linear-gradient(90deg,var(--fire),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:8px;
+}
+.obj-slide-text{font-size:13px;line-height:1.7;color:#444;}
+
+.slide-dots{display:flex;justify-content:center;gap:6px;margin-top:12px;}
+.dot{
+  width:8px;height:8px;border-radius:50%;background:#e8d8d8;
+  border:1px solid #ddd;cursor:pointer;transition:all 0.3s;
+}
+.dot.active{background:var(--fire);width:20px;border-radius:8px;border-color:var(--fire);}
+.slide-btns{display:flex;justify-content:space-between;margin-top:10px;}
+.slide-btn{
+  background:rgba(232,66,10,0.08);border:1px solid rgba(192,57,43,0.2);
+  color:var(--fire);border-radius:10px;padding:8px 18px;
+  font-size:16px;cursor:pointer;font-family:inherit;font-weight:700;
+  transition:all 0.2s;
+}
+.slide-btn:hover{background:rgba(232,66,10,0.15);}
+
+/* WhatsApp */
+.wa-section{margin:14px 14px 0;max-width:700px;}
+.wa-card{
+  background:linear-gradient(135deg,#f0faf4,#e6f7ed);
+  border:1px solid rgba(37,211,102,0.3);border-radius:16px;padding:14px;
+}
+.wa-card-title{font-size:14px;font-weight:800;color:#128C7E;margin-bottom:10px;
+  display:flex;align-items:center;gap:7px;}
+.wa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.wa-btn{
+  background:linear-gradient(135deg,#128C7E,#25D366);color:white;border:none;
+  border-radius:12px;padding:12px 8px;font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  gap:6px;text-decoration:none;font-family:inherit;
+}
+
+/* Quick Links */
+.ql-section{margin:14px 14px 0;max-width:700px;}
+.ql-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.ql-btn{
+  background:white;border:1px solid #f0d8d8;
+  border-radius:14px;padding:14px 10px;
+  font-size:13px;font-weight:800;cursor:pointer;
+  font-family:inherit;text-align:center;text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:5px;color:var(--text);
+  transition:all 0.2s;box-shadow:0 2px 8px rgba(192,57,43,0.07);
+}
+.ql-btn:hover{background:#fff5f5;border-color:var(--fire);}
+.ql-icon{font-size:24px;}
+.ql-txt{font-size:13px;}
+.ql-fb{background:linear-gradient(135deg,#e8f0fe,#dce8ff);border-color:rgba(24,119,242,0.2);color:#1877F2;}
+.ql-ig{background:linear-gradient(135deg,#fce8f0,#ffe0ec);border-color:rgba(228,64,95,0.2);color:#E4405F;}
+
+/* Slogan */
+.slogan-card{
+  margin:14px 14px 20px;max-width:700px;
+  background:linear-gradient(135deg,#1a0000,#3d0a0a,#6b1a2a);
+  border-radius:18px;
+  padding:20px;text-align:center;position:relative;overflow:hidden;
+}
+.slogan-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(245,166,35,0.1),transparent 70%);
+}
+.slogan-quote{font-size:32px;color:var(--gold);opacity:0.5;line-height:1;}
+.slogan-text{
+  font-size:14px;font-weight:700;font-style:italic;
+  color:var(--gold);line-height:1.8;position:relative;z-index:1;
+}
+.slogan-flag{font-size:22px;margin-top:8px;}
+
+/* ══════════════════════════
+   POSTS PAGE
+══════════════════════════ */
+#page-posts{background:#f8f4f4;}
+.posts-bar{
+  background:linear-gradient(135deg,#1a0000,#3d0a0a);
+  border-bottom:2px solid var(--gold);
+  color:var(--gold);padding:14px 16px;
+  font-size:17px;font-weight:800;
+  display:flex;align-items:center;gap:8px;
+  position:sticky;top:0;z-index:10;
+}
+.posts-inner{display:flex;justify-content:center;padding:10px;}
+.posts-inner .fb-page,
+.posts-inner .fb-page span,
+.posts-inner .fb-page iframe{width:100%!important;}
+.fb-loading{text-align:center;padding:30px 20px;color:var(--gray);}
+.fb-spinner{
+  width:32px;height:32px;border:4px solid #f0e0e0;
+  border-top:4px solid var(--fire);border-radius:50%;
+  animation:spin 1s linear infinite;margin:0 auto 8px;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ══════════════════════════
+   OBJECTIVES PAGE
+══════════════════════════ */
+.obj-full-inner{padding:14px;max-width:700px;margin:0 auto;}
+.obj-full-card{
+  background:white;border:1px solid #f0d8d8;
+  border-radius:14px;padding:14px 16px;
+  margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;
+  position:relative;overflow:hidden;
+  box-shadow:0 2px 8px rgba(192,57,43,0.07);
+}
+.obj-full-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--fire),var(--gold));
+}
+.obj-n{
+  width:28px;height:28px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--fire),var(--gold));
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:13px;color:white;
+}
+.obj-full-text{font-size:13px;line-height:1.7;color:#444;}
+
+/* ══════════════════════════
+   CONTACT PAGE
+══════════════════════════ */
+.contact-inner{padding:14px;max-width:700px;margin:0 auto;}
+.contact-card{
+  background:white;border:1px solid #f0d8d8;
+  border-radius:14px;padding:16px;margin-bottom:12px;
+  box-shadow:0 2px 8px rgba(192,57,43,0.07);
+}
+.contact-card h3{font-size:14px;font-weight:800;color:var(--fire2);margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px solid #f5e8e8;
+  display:flex;align-items:center;gap:6px;}
+.contact-row{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 0;border-bottom:1px solid #faf0f0;font-size:13px;
+}
+.c-label{font-weight:700;color:var(--gray);font-size:11px;}
+.c-val a{color:var(--fire);text-decoration:none;font-weight:800;}
+.social-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.social-btn{color:white;border:none;border-radius:11px;padding:12px;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;}
+.fb-sbtn{background:#1877F2;}
+.ig-sbtn{background:linear-gradient(135deg,#833ab4,#E4405F,#FCAF45);}
+.fg{margin-bottom:12px;}
+.fg label{display:block;font-size:11px;font-weight:800;color:var(--fire2);margin-bottom:5px;}
+.fg input,.fg textarea{
+  width:100%;padding:10px 12px;
+  background:#fafafa;border:1.5px solid #f0d8d8;
+  border-radius:10px;font-size:13px;font-family:inherit;
+  color:var(--text);outline:none;
+}
+.fg input:focus,.fg textarea:focus{border-color:var(--fire);}
+.fg textarea{resize:vertical;min-height:80px;}
+.sbtn{
+  width:100%;
+  background:linear-gradient(135deg,var(--fire),var(--gold));
+  color:white;border:none;border-radius:12px;
+  padding:14px;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit;
+}
+
+/* Page header bars */
+.page-bar{
+  background:linear-gradient(135deg,#1a0000,#3d0a0a);
+  border-bottom:2px solid var(--gold);
+  color:var(--gold);padding:14px 16px;
+  font-size:17px;font-weight:800;
+  display:flex;align-items:center;gap:8px;
+}
+/* ══════════════════════════
+   HOME LARGE SECTIONS
+══════════════════════════ */
+.home-section{padding:0 14px;margin-top:18px;max-width:700px;margin-left:auto;margin-right:auto;}
+.home-section:last-child{margin-bottom:24px;}
+.home-sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #f5e8e8;}
+.home-sec-bar{width:5px;height:26px;border-radius:4px;flex-shrink:0;background:linear-gradient(180deg,var(--fire),var(--gold));}
+.home-sec-hd h2{font-size:19px;font-weight:900;color:var(--text);}
+
+/* STATS 2x2 LARGE */
+.home-stats-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  padding:16px 14px 0;max-width:700px;margin:0 auto;
+}
+.home-stat-card{
+  background:white;border:1.5px solid #f0d8d8;
+  border-radius:18px;padding:22px 12px;text-align:center;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 16px rgba(192,57,43,0.1);
+}
+.home-stat-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--fire),var(--gold),var(--purple));
+}
+.home-stat-emo{font-size:36px;margin-bottom:8px;}
+.home-stat-num{
+  font-size:30px;font-weight:900;line-height:1;
+  background:linear-gradient(90deg,var(--fire),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.home-stat-label{font-size:14px;font-weight:700;color:#666;margin-top:5px;}
+
+/* QUICK LINKS 2x2 LARGE */
+.home-ql-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.home-ql-btn{
+  border-radius:18px;padding:22px 12px 18px;
+  font-size:15px;font-weight:800;cursor:pointer;
+  font-family:inherit;text-align:center;text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:6px;border:none;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.home-ql-btn:active{transform:scale(0.97);}
+.hql-icon{font-size:36px;}
+.hql-txt{font-size:16px;font-weight:900;color:white;}
+.hql-sub{font-size:11px;font-weight:600;color:rgba(255,255,255,0.8);}
+.hql-red{background:linear-gradient(135deg,var(--fire),#ff7043);}
+.hql-orange{background:linear-gradient(135deg,var(--gold2),var(--gold));}
+.hql-fb{background:linear-gradient(135deg,#1877F2,#0d5bba);}
+.hql-ig{background:linear-gradient(135deg,#833ab4,#E4405F,#fd5949);}
+
+/* WHATSAPP LARGE */
+.home-wa-card{
+  background:linear-gradient(135deg,#f0faf4,#e0f5ea);
+  border:1.5px solid rgba(37,211,102,0.3);
+  border-radius:18px;padding:16px;
+}
+.home-wa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.home-wa-btn{
+  background:linear-gradient(135deg,#075E54,#25D366);
+  border-radius:16px;padding:18px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  text-decoration:none;transition:transform 0.15s;
+}
+.home-wa-btn:active{transform:scale(0.97);}
+.hwa-num{font-size:15px;font-weight:900;color:white;}
+.hwa-sub{font-size:11px;font-weight:600;color:rgba(255,255,255,0.8);}
+
+/* ABOUT CARD */
+.home-about-card{
+  background:white;border:1.5px solid #f0d8d8;
+  border-radius:18px;padding:20px;
+  box-shadow:0 4px 14px rgba(192,57,43,0.08);
+}
+.about-icon-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.about-icon-chip{
+  background:linear-gradient(135deg,#fff5f0,#fff0f5);
+  border:1px solid #f5d0d0;border-radius:20px;
+  padding:6px 14px;font-size:13px;font-weight:700;color:var(--fire2);
+}
+.about-para{font-size:14px;line-height:1.8;color:#444;}
+.about-para strong{color:var(--fire);}
+
+/* SOCIAL MEDIA LARGE */
+.home-social-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.home-social-btn{
+  border-radius:18px;padding:22px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,0.12);
+  transition:transform 0.15s;
+}
+.home-social-btn:active{transform:scale(0.97);}
+.hso-fb{background:linear-gradient(135deg,#1877F2,#0d5bba);}
+.hso-ig{background:linear-gradient(135deg,#833ab4,#E4405F,#fd5949);}
+.hso-name{font-size:18px;font-weight:900;color:white;}
+.hso-sub{font-size:11px;color:rgba(255,255,255,0.8);font-weight:600;text-align:center;}
+.hso-cta{font-size:13px;font-weight:800;color:rgba(255,255,255,0.95);margin-top:4px;}
+
+/* keep obj-slider-section working inside home-section */
+.home-section .obj-slider-section{padding:0;margin:0;}
+</style>
+</head>
+<body>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/hi_IN/sdk.js#xfbml=1&version=v19.0">
+</script>
+
+<!-- HEADER -->
+<div class="topbar">
+  <div class="topbar-main">
+    <div class="logo-ring"><img src="icon-512.png" alt="JSS"/></div>
+    <div class="topbar-title">
+      <h1>जन संघर्ष समिति</h1>
+      <p>मध्यप्रदेश</p>
+    </div>
+    <button class="install-btn" id="installBtn" onclick="installPWA()">📲 Install</button>
+  </div>
+  <div class="ticker-wrap">
+    <span class="ticker-label">🔴 ताज़ा</span>
+    <div class="ticker-track">
+      <span class="ticker-content">
+        ✊ जन संघर्ष समिति मध्यप्रदेश में आपका स्वागत है &nbsp;|&nbsp;
+        ⚖️ न्याय और अधिकार के लिए संघर्ष जारी है &nbsp;|&nbsp;
+        🌾 किसान, मजदूर, युवा — हमारी ताकत &nbsp;|&nbsp;
+        📘 Facebook पर Follow करें &nbsp;|&nbsp;
+        🇮🇳 जय हिंद, जय मध्यप्रदेश &nbsp;|&nbsp;
+        🔥 भ्रष्टाचार के खिलाफ आवाज़ उठाएं &nbsp;|&nbsp;
+        👥 10,000+ सदस्य जुड़ चुके हैं
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-area">
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+
+    <!-- Stats Grid - 2x2 LARGE -->
+    <div class="home-stats-grid">
+      <div class="home-stat-card">
+        <div class="home-stat-emo">👥</div>
+        <div class="home-stat-num" data-target="10000" data-k="true">0</div>
+        <div class="home-stat-label">सदस्य</div>
+      </div>
+      <div class="home-stat-card">
+        <div class="home-stat-emo">🗺️</div>
+        <div class="home-stat-num" data-target="52">0</div>
+        <div class="home-stat-label">जिले</div>
+      </div>
+      <div class="home-stat-card">
+        <div class="home-stat-emo">✊</div>
+        <div class="home-stat-num" data-target="500" data-suffix="+">0</div>
+        <div class="home-stat-label">आंदोलन</div>
+      </div>
+      <div class="home-stat-card">
+        <div class="home-stat-emo">⚖️</div>
+        <div class="home-stat-num" data-target="1000" data-suffix="+" data-k="true">0</div>
+        <div class="home-stat-label">मामले सुलझाए</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions - LARGE 2x2 -->
+    <div class="home-section">
+      <div class="home-sec-hd">
+        <div class="home-sec-bar"></div>
+        <h2>त्वरित लिंक</h2>
+      </div>
+      <div class="home-ql-grid">
+        <button class="home-ql-btn hql-red" onclick="showPage('posts','posts')">
+          <span class="hql-icon">📢</span>
+          <span class="hql-txt">सभी पोस्ट</span>
+          <span class="hql-sub">Facebook Feed</span>
+        </button>
+        <button class="home-ql-btn hql-orange" onclick="showPage('objectives','objectives')">
+          <span class="hql-icon">🎯</span>
+          <span class="hql-txt">हमारे उद्देश्य</span>
+          <span class="hql-sub">10 उद्देश्य</span>
+        </button>
+        <a href="https://www.facebook.com/61556973026116" class="home-ql-btn hql-fb" target="_blank">
+          <span class="hql-icon">📘</span>
+          <span class="hql-txt">Facebook</span>
+          <span class="hql-sub">Follow करें</span>
+        </a>
+        <a href="https://www.instagram.com/jan_sanghrsh_samiti_mp?igsh=ZTg0dWl3dzFpbG50" class="home-ql-btn hql-ig" target="_blank">
+          <span class="hql-icon">📸</span>
+          <span class="hql-txt">Instagram</span>
+          <span class="hql-sub">Follow करें</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- WhatsApp LARGE -->
+    <div class="home-section">
+      <div class="home-sec-hd">
+        <div class="home-sec-bar" style="background:linear-gradient(180deg,#25D366,#128C7E)"></div>
+        <h2>WhatsApp पर जुड़ें</h2>
+      </div>
+      <div class="home-wa-card">
+        <div class="home-wa-grid">
+          <a href="https://wa.me/919098949143" class="home-wa-btn" target="_blank">
+            <span style="font-size:28px;">📱</span>
+            <span class="hwa-num">9098949143</span>
+            <span class="hwa-sub">मुख्य नंबर</span>
+          </a>
+          <a href="https://wa.me/916260344674" class="home-wa-btn" target="_blank">
+            <span style="font-size:28px;">📱</span>
+            <span class="hwa-num">6260344674</span>
+            <span class="hwa-sub">वैकल्पिक नंबर</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Objectives Slider -->
+    <div class="home-section">
+      <div class="home-sec-hd">
+        <div class="home-sec-bar"></div>
+        <h2>हमारे उद्देश्य</h2>
+        <span id="slideCounter" style="font-size:13px;color:#888;font-weight:600;margin-left:auto;">1 / 10</span>
+      </div>
+      <div class="obj-slider">
+        <div class="obj-slides" id="objSlides"></div>
+      </div>
+      <div class="slide-dots" id="slideDots"></div>
+      <div class="slide-btns">
+        <button class="slide-btn" onclick="prevSlide()">◀ पिछला</button>
+        <button class="slide-btn" onclick="nextSlide()">अगला ▶</button>
+      </div>
+    </div>
+
+    <!-- About Organisation -->
+    <div class="home-section">
+      <div class="home-sec-hd">
+        <div class="home-sec-bar" style="background:linear-gradient(180deg,var(--purple),var(--fire))"></div>
+        <h2>हमारे बारे में</h2>
+      </div>
+      <div class="home-about-card">
+        <div class="about-icon-row">
+          <span class="about-icon-chip">🌾 किसान</span>
+          <span class="about-icon-chip">👷 मजदूर</span>
+          <span class="about-icon-chip">👩 महिला</span>
+          <span class="about-icon-chip">🎓 युवा</span>
+        </div>
+        <p class="about-para">जन संघर्ष समिति मध्यप्रदेश — गरीब, मजदूर, किसान, युवा, महिला एवं वंचित वर्गों की आवाज़ बनकर <strong>न्याय और अधिकार की लड़ाई</strong> लड़ रही है।</p>
+        <p class="about-para" style="margin-top:10px;">हम संविधान की रक्षा, भ्रष्टाचार के विरोध और लोकतंत्र की मजबूती के लिए प्रतिबद्ध हैं।</p>
+      </div>
+    </div>
+
+    <!-- Social Media LARGE -->
+    <div class="home-section">
+      <div class="home-sec-hd">
+        <div class="home-sec-bar" style="background:linear-gradient(180deg,#1877F2,#833ab4)"></div>
+        <h2>सोशल मीडिया</h2>
+      </div>
+      <div class="home-social-grid">
+        <a href="https://www.facebook.com/61556973026116" class="home-social-btn hso-fb" target="_blank">
+          <span style="font-size:36px;">📘</span>
+          <span class="hso-name">Facebook</span>
+          <span class="hso-sub">Jan Sangharsh Samiti MP</span>
+          <span class="hso-cta">Follow करें →</span>
+        </a>
+        <a href="https://www.instagram.com/jan_sanghrsh_samiti_mp?igsh=ZTg0dWl3dzFpbG50" class="home-social-btn hso-ig" target="_blank">
+          <span style="font-size:36px;">📸</span>
+          <span class="hso-name">Instagram</span>
+          <span class="hso-sub">@jan_sanghrsh_samiti_mp</span>
+          <span class="hso-cta">Follow करें →</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Slogan -->
+    <div class="home-section">
+      <div class="slogan-card" style="margin:0;">
+        <div class="slogan-quote">"</div>
+        <div class="slogan-text" style="font-size:17px;">जन-जन की आवाज़,<br>न्याय और अधिकार के लिए<br>संघर्ष हमारा संकल्प</div>
+        <div class="slogan-flag" style="font-size:28px;margin-top:12px;">✊🇮🇳🔥</div>
+      </div>
+    </div>
+
+  </div><!-- /home -->
+
+  <!-- POSTS -->
+  <div class="page" id="page-posts">
+    <div class="posts-bar">🔥 Facebook पोस्ट</div>
+    <div class="fb-loading" id="posts-loading" style="padding:30px 20px;">
+      <div class="fb-spinner"></div>
+      <p style="font-size:13px;">पोस्ट लोड हो रही हैं...</p>
+    </div>
+    <div class="posts-inner">
+      <div style="width:100%;max-width:500px;">
+        <div class="fb-page"
+          data-href="https://www.facebook.com/61556973026116/"
+          data-tabs="timeline"
+          data-width="500"
+          data-height="2000"
+          data-small-header="false"
+          data-adapt-container-width="true"
+          data-hide-cover="false"
+          data-show-facepile="true">
+          <blockquote cite="https://www.facebook.com/61556973026116/" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/61556973026116/">Jan Sangharsh Samiti MP</a>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJECTIVES FULL -->
+  <div class="page" id="page-objectives">
+    <div class="page-bar">🎯 संगठन के उद्देश्य</div>
+    <div class="obj-full-inner" id="objFull"></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="page" id="page-contact">
+    <div class="page-bar">📞 संपर्क करें</div>
+    <div class="contact-inner">
+      <div class="contact-card">
+        <h3>📞 WhatsApp / फ़ोन</h3>
+        <div class="contact-row">
+          <span>💬</span>
+          <div><div class="c-label">मुख्य नंबर</div>
+          <div class="c-val"><a href="https://wa.me/919098949143" target="_blank">9098949143</a></div></div>
+        </div>
+        <div class="contact-row">
+          <span>💬</span>
+          <div><div class="c-label">वैकल्पिक नंबर</div>
+          <div class="c-val"><a href="https://wa.me/916260344674" target="_blank">6260344674</a></div></div>
+        </div>
+        <div class="wa-grid" style="margin-top:12px;">
+          <a href="https://wa.me/919098949143" class="wa-btn" target="_blank">📲 WhatsApp 1</a>
+          <a href="https://wa.me/916260344674" class="wa-btn" target="_blank">📲 WhatsApp 2</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <h3>🌐 सोशल मीडिया</h3>
+        <div class="social-grid">
+          <a href="https://www.facebook.com/61556973026116" class="social-btn fb-sbtn" target="_blank">📘 Facebook</a>
+          <a href="https://www.instagram.com/jan_sanghrsh_samiti_mp?igsh=ZTg0dWl3dzFpbG50" class="social-btn ig-sbtn" target="_blank">📸 Instagram</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <h3>✍️ शिकायत / संदेश</h3>
+        <div class="fg"><label>आपका नाम</label><input type="text" id="cName" placeholder="नाम लिखें..."/></div>
+        <div class="fg"><label>मोबाइल नंबर</label><input type="tel" id="cPhone" placeholder="मोबाइल नंबर..."/></div>
+        <div class="fg"><label>संदेश</label><textarea id="cMsg" placeholder="अपनी बात लिखें..."></textarea></div>
+        <button class="sbtn" onclick="sendWA()">💬 WhatsApp पर भेजें</button>
+      </div>
+      <div class="slogan-card" style="margin:0 0 20px;">
+        <div class="slogan-quote">"</div>
+        <div class="slogan-text">जन-जन की आवाज़,<br>न्याय और अधिकार के लिए संघर्ष हमारा संकल्प</div>
+        <div class="slogan-flag">✊🇮🇳</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content-area -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="bnav-item active" id="bnav-home" onclick="showPage('home','home')">
+    <span class="icon">🏠</span>होम
+  </button>
+  <button class="bnav-item" id="bnav-posts" onclick="showPage('posts','posts')">
+    <span class="icon">📢</span>पोस्ट
+  </button>
+  <button class="bnav-item" id="bnav-objectives" onclick="showPage('objectives','objectives')">
+    <span class="icon">🎯</span>उद्देश्य
+  </button>
+  <button class="bnav-item" id="bnav-contact" onclick="showPage('contact','contact')">
+    <span class="icon">📞</span>संपर्क
+  </button>
+</div>
+
+<script>
+/* ── DATA ── */
+const objectives=[
+  {icon:'⚖️',title:'जन-समस्या निवारण',text:'जनहित के मुद्दों को उठाना तथा आम नागरिकों की समस्याओं के समाधान के लिए संघर्ष करना।'},
+  {icon:'👨‍👩‍👧‍👦',title:'वंचित वर्गों की रक्षा',text:'गरीब, मजदूर, किसान, युवा, महिला एवं वंचित वर्गों के अधिकारों की रक्षा करना।'},
+  {icon:'🤝',title:'योजनाओं का लाभ',text:'शासन की जनकल्याणकारी योजनाओं का लाभ पात्र लोगों तक पहुँचाने में सहयोग करना।'},
+  {icon:'📢',title:'भ्रष्टाचार विरोध',text:'भ्रष्टाचार, अन्याय, शोषण एवं प्रशासनिक लापरवाही के विरुद्ध निरंतर आवाज़ उठाना।'},
+  {icon:'🏗️',title:'मूलभूत सुविधाएं',text:'शिक्षा, स्वास्थ्य, पेयजल, सड़क, आवास एवं अन्य मूलभूत सुविधाओं के लिए जनआंदोलन करना।'},
+  {icon:'📜',title:'संवैधानिक जागरूकता',text:'संविधान द्वारा प्रदत्त अधिकारों एवं कर्तव्यों के प्रति नागरिकों को जागरूक करना।'},
+  {icon:'🕊️',title:'सामाजिक समरसता',text:'सामाजिक समरसता, भाईचारा एवं लोकतांत्रिक मूल्यों को बढ़ावा देना।'},
+  {icon:'🌿',title:'पर्यावरण संरक्षण',text:'पर्यावरण संरक्षण, स्वच्छता एवं सामाजिक सुधार के कार्यों में जनभागीदारी सुनिश्चित करना।'},
+  {icon:'✊',title:'संगठनात्मक संघर्ष',text:'जनसमस्याओं के निराकरण हेतु ज्ञापन, धरना, प्रदर्शन एवं वैधानिक संघर्ष करना।'},
+  {icon:'🛡️',title:'न्याय सहायता',text:'समाज के कमजोर एवं जरूरतमंद लोगों को न्याय दिलाने के लिए संगठनात्मक सहायता प्रदान करना।'}
+];
+
+/* ── BUILD OBJECTIVE SLIDER ── */
+const slidesEl=document.getElementById('objSlides');
+const dotsEl=document.getElementById('slideDots');
+let current=0;
+
+objectives.forEach((o,i)=>{
+  slidesEl.innerHTML+=`
+    <div class="obj-slide">
+      <div class="obj-num-big">${String(i+1).padStart(2,'0')}</div>
+      <div class="obj-icon">${o.icon}</div>
+      <div class="obj-slide-title">${o.title}</div>
+      <div class="obj-slide-text">${o.text}</div>
+    </div>`;
+  dotsEl.innerHTML+=`<div class="dot ${i===0?'active':''}" onclick="goSlide(${i})"></div>`;
+});
+
+/* Build full objectives page */
+document.getElementById('objFull').innerHTML=objectives.map((o,i)=>
+  `<div class="obj-full-card">
+    <div class="obj-n">${i+1}</div>
+    <div class="obj-full-text"><strong style="color:var(--gold)">${o.icon} ${o.title}:</strong> ${o.text}</div>
+  </div>`
+).join('');
+
+function goSlide(n){
+  current=n;
+  document.getElementById('objSlides').style.transform=`translateX(-${n*100}%)`;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
+  document.getElementById('slideCounter').textContent=`${n+1} / ${objectives.length}`;
+}
+function nextSlide(){goSlide((current+1)%objectives.length);}
+function prevSlide(){goSlide((current-1+objectives.length)%objectives.length);}
+
+// Auto-advance slider
+setInterval(nextSlide,4000);
+
+/* ── STATS COUNTER ── */
+function animateCounters(){
+  document.querySelectorAll('.home-stat-num[data-target]').forEach(el=>{
+    const target=+el.dataset.target;
+    const suffix=el.dataset.suffix||'';
+    const isK=el.dataset.k==='true';
+    const step=Math.ceil(target/50);
+    let cur=0;
+    const t=setInterval(()=>{
+      cur=Math.min(cur+step,target);
+      el.textContent=isK?(cur>=1000?(cur/1000).toFixed(0)+'K+':cur):cur+suffix;
+      if(cur>=target)clearInterval(t);
+    },25);
+  });
+}
+setTimeout(animateCounters,400);
+
+/* ── PAGE NAV ── */
+function showPage(name,bnavId){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bnav-'+bnavId).classList.add('active');
+  document.querySelector('.content-area').scrollTop=0;
+  if(name==='posts'&&window.FB)setTimeout(()=>FB.XFBML.parse(),100);
+}
+
+/* ── WHATSAPP ── */
+function sendWA(){
+  const n=document.getElementById('cName').value.trim();
+  const p=document.getElementById('cPhone').value.trim();
+  const m=document.getElementById('cMsg').value.trim();
+  if(!n||!m){alert('⚠️ नाम और संदेश भरें');return;}
+  window.open('https://wa.me/919098949143?text='+encodeURIComponent(`नाम: ${n}\nफ़ोन: ${p}\nसंदेश: ${m}`),'_blank');
+}
+
+/* ── FB SDK ── */
+window.fbAsyncInit=function(){
+  FB.init({xfbml:true,version:'v19.0'});
+  FB.Event.subscribe('xfbml.render',()=>{
+    const el=document.getElementById('posts-loading');
+    if(el)el.style.display='none';
+  });
+};
+setTimeout(()=>{const el=document.getElementById('posts-loading');if(el)el.style.display='none';},5000);
+
+/* ── PWA ── */
+let dp;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();dp=e;
+  document.getElementById('installBtn').style.display='flex';
+});
+function installPWA(){
+  if(dp){dp.prompt();dp.userChoice.then(()=>{dp=null;document.getElementById('installBtn').style.display='none';});}
+}
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
