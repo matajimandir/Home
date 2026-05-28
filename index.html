@@ -866,6 +866,41 @@ function installPWA(){
   if(dp){dp.prompt();dp.userChoice.then(()=>{dp=null;document.getElementById('installBtn').style.display='none';});}
 }
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+/* ── SCROLL → AUTO TAB SWITCH ── */
+const pageOrder = ['home','posts','objectives','contact'];
+const bnavOrder = ['home','posts','objectives','contact'];
+let currentPageIdx = 0;
+let scrollSwitching = false;
+
+const contentArea = document.querySelector('.content-area');
+
+contentArea.addEventListener('scroll', function() {
+  if(scrollSwitching) return;
+
+  const scrollTop    = contentArea.scrollTop;
+  const scrollHeight = contentArea.scrollHeight;
+  const clientHeight = contentArea.clientHeight;
+  const atBottom     = scrollHeight - scrollTop - clientHeight < 18;
+
+  // Jab current page ke bilkul neeche pahunch jao → next tab open karo
+  if(atBottom && currentPageIdx < pageOrder.length - 1) {
+    scrollSwitching = true;
+    currentPageIdx++;
+    showPage(pageOrder[currentPageIdx], bnavOrder[currentPageIdx]);
+
+    // Thodi der baad scroll lock hatao (new page top par hogi)
+    setTimeout(() => { scrollSwitching = false; }, 600);
+  }
+}, { passive: true });
+
+// showPage ke saath currentPageIdx bhi sync karo (tab click pe bhi)
+const _origShowPage = showPage;
+window.showPage = function(name, bnavId) {
+  _origShowPage(name, bnavId);
+  const idx = pageOrder.indexOf(name);
+  if(idx !== -1) currentPageIdx = idx;
+};
 </script>
 </body>
 </html>
