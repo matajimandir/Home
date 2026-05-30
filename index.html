@@ -9,7 +9,7 @@
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <title>जन संघर्ष समिति मध्यप्रदेश</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Baloo+2:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Mukta:wght@400;600;700;800&family=Baloo+2:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --black:#0A0A0A;
@@ -35,9 +35,10 @@ html,body{width:100%;height:100%;overflow:hidden;}
 body{
   display:flex;flex-direction:column;
   background:var(--bg);
-  font-family:'Baloo 2',sans-serif;
+  font-family:'Poppins','Baloo 2',sans-serif;
   color:var(--text);
 }
+h1,h2,h3{font-family:'Mukta','Baloo 2',sans-serif;}
 
 /* ══ SCROLLBAR ══ */
 ::-webkit-scrollbar{width:4px;}
@@ -57,7 +58,7 @@ body{
 }
 .logo-ring{
   width:56px;height:56px;border-radius:50%;
-  background:linear-gradient(135deg,var(--red),var(--purple));
+  background:#ffffff;
   padding:3px;flex-shrink:0;
   box-shadow:0 0 18px var(--glow),0 0 35px rgba(123,45,139,0.2);
   animation:logoPulse 3s ease-in-out infinite;
@@ -668,7 +669,6 @@ body{
 
   <!-- POSTS -->
   <div class="page" id="page-posts">
-    <div class="posts-bar">🔥 Facebook पोस्ट</div>
     <div class="fb-loading" id="posts-loading" style="padding:30px 20px;">
       <div class="fb-spinner"></div>
       <p style="font-size:13px;">पोस्ट लोड हो रही हैं...</p>
@@ -866,41 +866,6 @@ function installPWA(){
   if(dp){dp.prompt();dp.userChoice.then(()=>{dp=null;document.getElementById('installBtn').style.display='none';});}
 }
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-
-/* ── SCROLL → AUTO TAB SWITCH ── */
-const pageOrder = ['home','posts','objectives','contact'];
-const bnavOrder = ['home','posts','objectives','contact'];
-let currentPageIdx = 0;
-let scrollSwitching = false;
-
-const contentArea = document.querySelector('.content-area');
-
-contentArea.addEventListener('scroll', function() {
-  if(scrollSwitching) return;
-
-  const scrollTop    = contentArea.scrollTop;
-  const scrollHeight = contentArea.scrollHeight;
-  const clientHeight = contentArea.clientHeight;
-  const atBottom     = scrollHeight - scrollTop - clientHeight < 18;
-
-  // Jab current page ke bilkul neeche pahunch jao → next tab open karo
-  if(atBottom && currentPageIdx < pageOrder.length - 1) {
-    scrollSwitching = true;
-    currentPageIdx++;
-    showPage(pageOrder[currentPageIdx], bnavOrder[currentPageIdx]);
-
-    // Thodi der baad scroll lock hatao (new page top par hogi)
-    setTimeout(() => { scrollSwitching = false; }, 600);
-  }
-}, { passive: true });
-
-// showPage ke saath currentPageIdx bhi sync karo (tab click pe bhi)
-const _origShowPage = showPage;
-window.showPage = function(name, bnavId) {
-  _origShowPage(name, bnavId);
-  const idx = pageOrder.indexOf(name);
-  if(idx !== -1) currentPageIdx = idx;
-};
 </script>
 </body>
 </html>
