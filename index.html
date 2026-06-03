@@ -36,6 +36,16 @@ body{display:flex;flex-direction:column;background:var(--bg);font-family:'Baloo 
 .bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px 10px;cursor:pointer;color:var(--gray);font-size:13px;font-weight:700;border:none;background:none;font-family:inherit;gap:2px;transition:all 0.2s;}
 .bnav-item .icon{font-size:26px;}.bnav-item.active{color:var(--fire);}.bnav-item.active .icon{filter:drop-shadow(0 0 4px rgba(232,66,10,0.4));}
 
+/* COMPACT MODE - posts tab */
+body.compact-mode .ticker-wrap{display:none;}
+body.compact-mode .topbar-main{padding:6px 14px;}
+body.compact-mode .logo-ring{width:36px;height:36px;}
+body.compact-mode .topbar-title h1{font-size:16px;}
+body.compact-mode .topbar-title p{font-size:11px;}
+body.compact-mode .bottom-nav{padding:0;}
+body.compact-mode .bnav-item{padding:6px 4px 7px;font-size:0;}
+body.compact-mode .bnav-item .icon{font-size:20px;}
+
 /* HERO BANNER */
 .hero-banner{position:relative;overflow:hidden;}
 .hero-banner img{width:100%;height:200px;object-fit:cover;display:block;}
@@ -359,7 +369,7 @@ function prevSlide(){goSlide((current-1+objectives.length)%objectives.length);}
 setInterval(nextSlide,4000);
 function animateCounters(){document.querySelectorAll('.home-stat-num[data-target]').forEach(el=>{const target=+el.dataset.target;const suffix=el.dataset.suffix||'';const isK=el.dataset.k==='true';const step=Math.ceil(target/50);let cur=0;const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=isK?(cur>=1000?(cur/1000).toFixed(0)+'K+':cur):cur+suffix;if(cur>=target)clearInterval(t);},25);});}
 setTimeout(animateCounters,400);
-function showPage(name,bnavId){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));document.getElementById('bnav-'+bnavId).classList.add('active');document.querySelector('.content-area').scrollTop=0;if(name==='posts'&&window.FB)setTimeout(()=>FB.XFBML.parse(),100);}
+function showPage(name,bnavId){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));document.getElementById('bnav-'+bnavId).classList.add('active');document.querySelector('.content-area').scrollTop=0;if(name==='posts'){document.body.classList.add('compact-mode');if(window.FB)setTimeout(()=>FB.XFBML.parse(),100);}else{document.body.classList.remove('compact-mode');}}
 function sendWA(){const n=document.getElementById('cName').value.trim();const p=document.getElementById('cPhone').value.trim();const m=document.getElementById('cMsg').value.trim();if(!n||!m){alert('⚠️ नाम और संदेश भरें');return;}window.open('https://wa.me/919098949143?text='+encodeURIComponent(`नाम: ${n}
 फ़ोन: ${p}
 संदेश: ${m}`),'_blank');}
